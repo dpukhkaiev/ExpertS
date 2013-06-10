@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#index.xhtml" PATH="/index.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#index.xhtml:0" NAME="item"
+   PATH="/index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{navigationController.moveToArea}:#{navigationController.page}"
+    NAME="output" PATH="#{navigationController.page}"
+    TARGET="rules:#{navigationController.page}"
+    TITLE="#{navigationController.moveToArea}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#{navigationController.page}"
+  PATH="/{navigationController.page}" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>

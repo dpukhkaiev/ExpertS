@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<h:outputStylesheet name="../WEB-INF/resources/css/screen.css" />
+	<title>index</title>
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:dataGrid id="subject_Areas" var="subject_Area"
+			value="#{indexBean.subject_Areas}" columns="3" rows="12"
+			paginator="true"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="9,12,15">
+
+
+
+			<p:panel header="#{subject_Area.id}" style="text-align:center">
+				<h:panelGrid columns="1"
+					style="width:100%;text-align:center;font-weight:bold">
+					<p:commandLink title="#{subject_Area.name}"
+						action="#{navigationController.moveToArea}"
+						style="text-align:center">
+						<h:outputText value="#{subject_Area.name}" />
+						<f:setPropertyActionListener value="#{subject_Area}"
+							target="#{indexBean.selected_Subject_Area}" />
+						<f:param id="id" name="id" value="#{subject_Area.id}" />
+					</p:commandLink>
+				</h:panelGrid>
+			</p:panel>
+		</p:dataGrid>
+
+		<p:dialog header="Area Detail" widgetVar="areaDialog" modal="true">
+			<p:outputPanel id="areaDetail" style="text-align:center;"
+				layout="block">
+
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="subject_Area" value="Subject Area: " />
+					<h:outputText id="subject_Area"
+						value="#{indexBean.selected_Subject_Area.name}" />
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+	<h:form id="new">
+		<p:panel header="Create new Subject Area"
+			style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandLink update=":new:newArea"
+					oncomplete="newAreaDialog.show()" title="New Area Detail">
+					<p:graphicImage value="../WEB-INF/resources/img/add.jpg" />
+				</p:commandLink>
+			</h:panelGrid>
+		</p:panel>
+		<p:dialog header="New Area" widgetVar="newAreaDialog" modal="true">
+			<p:outputPanel id="newArea" style="text-align:center;" layout="block">
+
+				<h:panelGrid columns="3" cellpadding="5">
+					<h:outputLabel for="subject_Area" value="Subject Area: " />
+					<h:panelGrid columns="1" cellpadding="5">
+						<p:inputTextarea id="subject_Area"
+							value="#{indexBean.selected_Subject_Area.name}" rows="1"
+							cols="30" counter="counter" maxlength="20"
+							counterTemplate="{0} characters remaining." autoResize="false"
+							required="false">
+							<f:validateLength minimum="2" />
+						</p:inputTextarea>
+						<h:outputText id="counter" />
+					</h:panelGrid>
+					<!-- 					<p:message for="subject_Area" autoUpdate="true" /> -->
+				</h:panelGrid>
+				<p:commandButton value="Create" update=":new:newArea,:form"
+					actionListener="#{indexBean.newArea}"
+					styleClass="ui-priority-primary" oncomplete="newAreaDialog.hide()" />
+
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<h:outputStylesheet name="../WEB-INF/resources/css/screen.css" />
+	<title>#{areaBean.subject_Area.name}</title>
+</h:head>
+<h:body>
+	<h1 style="text-align: center;">#{areaBean.id} #{areaBean.subject_Area.name}</h1>
+	<h:form id="newQuery">
+		<p:panel header="New Query" style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandButton update=":newQuery:newQuery"
+					oncomplete="newQueryDialog.show()" title="Start" value="Start" />
+			</h:panelGrid>
+		</p:panel>
+		<p:dialog header="New Query" widgetVar="newQueryDialog" modal="true">
+			<p:outputPanel id="newQuery" style="text-align:center;"
+				layout="block">
+				<p:terminal commandHandler="#{terminalController.handleCommand}"
+					height="300px"
+					welcomeMessage="Hello, user! Welcome to #{areaBean.indexBean.selected_Subject_Area.name} Expert System!" />
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+	<h:form id="newRule">
+		<p:panel header="New Rule" style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandButton update=":newRule:newRule"
+					oncomplete="newRuleDialog.show()" title="Add new Rule"
+					value="Add new Rule" />
+			</h:panelGrid>
+		</p:panel>
+		<p:dialog header="New Rule" widgetVar="newRuleDialog" modal="true">
+			<p:outputPanel id="newRule" style="text-align:center;" layout="block">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="question" value="Question: " />
+					<h:outputText id="question" value="#{areaBean.question.name}" />
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+	<h:form id="newQuestion">
+		<p:panel header="New Question" style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandButton update=":newQuestion:newQuestion"
+					oncomplete="newQuestionDialog.show()" title="Add new Question"
+					value="Add new Question" />
+			</h:panelGrid>
+		</p:panel>
+		<p:dialog header="New Question" widgetVar="newQuestionDialog"
+			modal="true">
+			<p:outputPanel id="newQuestion" style="text-align:center;"
+				layout="block">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="question" value="Question: " />
+					<p:inputText id="question" value="#{areaBean.question.name}" />
+					<h:outputLabel for="answer" value="Answer: " />
+					<p:inputText id="answer" value="#{areaBean.answer.name}" />
+					<p:commandLink update=":newQuestion:newQuestion" value="one more answer" oncomplete=""/>
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>
