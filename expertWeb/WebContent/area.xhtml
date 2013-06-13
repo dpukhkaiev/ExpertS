@@ -1,13 +1,14 @@
 <html xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<h:outputStylesheet name="../WEB-INF/resources/css/screen.css" />
+	<h:outputStylesheet name="resources/css/screen.css" />
 	<title>#{areaBean.subject_Area.name}</title>
 </h:head>
 <h:body>
-	<h1 style="text-align: center;">#{areaBean.id} #{areaBean.subject_Area.name}</h1>
+	<h1 style="text-align: center;">#{areaBean.subject_Area.name}</h1>
 	<h:form id="newQuery">
 		<p:panel header="New Query" style="text-align:center; width:30%">
 			<h:panelGrid columns="1" style="text-align:center;width:100%">
@@ -37,7 +38,7 @@
 			<p:outputPanel id="newRule" style="text-align:center;" layout="block">
 				<h:panelGrid columns="2" cellpadding="5">
 					<h:outputLabel for="question" value="Question: " />
-					<h:outputText id="question" value="#{areaBean.question.name}" />
+					<h:outputText id="question" value="#{areaBean.problem.question}" />
 				</h:panelGrid>
 			</p:outputPanel>
 		</p:dialog>
@@ -56,11 +57,48 @@
 			<p:outputPanel id="newQuestion" style="text-align:center;"
 				layout="block">
 				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="problem" value="Problem: " />
+					<p:inputText id="problem" value="#{areaBean.problem.name}">
+						<f:validateLength minimum="5" />
+					</p:inputText>
 					<h:outputLabel for="question" value="Question: " />
-					<p:inputText id="question" value="#{areaBean.question.name}" />
+					<p:inputText id="question" value="#{areaBean.problem.question}">
+						<f:validateLength minimum="5" />
+					</p:inputText>
+					<p:commandButton update=":newQuestion:newQuestion"
+						actionListener="#{areaBean.addProblem}" title="Add new Question"
+						value="Submit" oncomplete="newQuestionDialog.hide()" />
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+	<h:form id="newAnswer">
+		<p:panel header="New Answer" style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandButton update=":newAnswer:newAnswer"
+					oncomplete="newAnswerDialog.show()" title="Add new Answer"
+					value="Add new Answer" />
+			</h:panelGrid>
+		</p:panel>
+		<p:dialog header="New Answer" widgetVar="newAnswerDialog" modal="true">
+			<p:outputPanel id="newAnswer" style="text-align:center;"
+				layout="block">
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="questions" value="Question: " />
+					<p:selectOneMenu id="questions" value="#{areaBean.selectedProblem}"
+						converter="#{questionConverterBean}">
+						<f:selectItem itemLabel="Select One" itemValue="" />
+						<f:selectItems value="#{areaBean.subject_Area.problems}"
+							var="problem" itemValue="#{problem}"
+							itemLabel="#{problem.question}" />
+					</p:selectOneMenu>
 					<h:outputLabel for="answer" value="Answer: " />
-					<p:inputText id="answer" value="#{areaBean.answer.name}" />
-					<p:commandLink update=":newQuestion:newQuestion" value="one more answer" oncomplete=""/>
+					<p:inputText id="answer" value="#{areaBean.answer.name}">
+						<f:validateLength minimum="5" />
+					</p:inputText>
+					<p:commandButton update=":newAnswer:newAnswer"
+						actionListener="#{areaBean.addAnswer}" title="Add new Answer"
+						value="Submit" oncomplete="newAnswerDialog.hide()" />
 				</h:panelGrid>
 			</p:outputPanel>
 		</p:dialog>

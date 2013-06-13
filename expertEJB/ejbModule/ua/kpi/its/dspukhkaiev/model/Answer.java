@@ -22,8 +22,8 @@ public class Answer implements Serializable {
     private String name;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "Question_idQuestion", referencedColumnName = "idQuestion")
-    private Question question;
+    @JoinColumn(name = "Problem_idProblem", referencedColumnName = "idProblem")
+    private Problem problem;
 
     @ManyToMany(mappedBy = "answers", cascade = CascadeType.ALL)
     private Set<Rule> rules = new HashSet<Rule>();
@@ -50,20 +50,20 @@ public class Answer implements Serializable {
         this.name = name;
     }
 
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
     public Set<Rule> getRules() {
         return rules;
     }
 
     public void setRules(Set<Rule> rules) {
         this.rules = rules;
+    }
+
+    public Problem getProblem() {
+        return problem;
+    }
+
+    public void setProblem(Problem problem) {
+        this.problem = problem;
     }
 
 }

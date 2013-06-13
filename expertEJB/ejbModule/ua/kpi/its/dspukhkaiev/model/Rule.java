@@ -19,8 +19,9 @@ public class Rule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "cause", nullable = false)
-    private String cause;
+    @ManyToOne
+    @JoinColumn(name = "Cause_idCause", referencedColumnName = "idCause")
+    private Cause cause;
 
     @ManyToMany
     private Set<Answer> answers = new HashSet<Answer>();
@@ -39,11 +40,11 @@ public class Rule implements Serializable {
         this.id = id;
     }
 
-    public String getCause() {
+    public Cause getCause() {
         return cause;
     }
 
-    public void setCause(String cause) {
+    public void setCause(Cause cause) {
         this.cause = cause;
     }
 
@@ -54,5 +55,7 @@ public class Rule implements Serializable {
     public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
     }
+    
+    
 
 }

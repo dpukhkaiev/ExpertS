@@ -5,7 +5,8 @@
 	<persistence-unit name="expertEJB">
 		<jta-data-source>java:jboss/datasources/ExpertDS</jta-data-source>
 		<class>ua.kpi.its.dspukhkaiev.model.Answer</class>
-		<class>ua.kpi.its.dspukhkaiev.model.Question</class>
+		<class>ua.kpi.its.dspukhkaiev.model.Cause</class>
+		<class>ua.kpi.its.dspukhkaiev.model.Problem</class>
 		<class>ua.kpi.its.dspukhkaiev.model.Rule</class>
 		<class>ua.kpi.its.dspukhkaiev.model.Subject_Area</class>
 		<properties>

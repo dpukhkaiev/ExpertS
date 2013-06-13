@@ -3,7 +3,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<h:outputStylesheet name="../WEB-INF/resources/css/screen.css" />
+	<h:outputStylesheet name="resources/css/screen.css" />
 	<title>index</title>
 </h:head>
 <h:body>
@@ -14,8 +14,6 @@
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="9,12,15">
 
-
-
 			<p:panel header="#{subject_Area.id}" style="text-align:center">
 				<h:panelGrid columns="1"
 					style="width:100%;text-align:center;font-weight:bold">
@@ -25,10 +23,11 @@
 						<h:outputText value="#{subject_Area.name}" />
 						<f:setPropertyActionListener value="#{subject_Area}"
 							target="#{indexBean.selected_Subject_Area}" />
-						<f:param id="id" name="id" value="#{subject_Area.id}" />
+						<!-- 						<f:param id="id" name="id" value="#{subject_Area.id}" /> -->
 					</p:commandLink>
 				</h:panelGrid>
 			</p:panel>
+
 		</p:dataGrid>
 
 		<p:dialog header="Area Detail" widgetVar="areaDialog" modal="true">
@@ -50,7 +49,8 @@
 			<h:panelGrid columns="1" style="text-align:center;width:100%">
 				<p:commandLink update=":new:newArea"
 					oncomplete="newAreaDialog.show()" title="New Area Detail">
-					<p:graphicImage value="../WEB-INF/resources/img/add.jpg" />
+					<p:graphicImage value="resources/img/add.jpg" height="100"
+						width="100" />
 				</p:commandLink>
 			</h:panelGrid>
 		</p:panel>
@@ -61,17 +61,18 @@
 					<h:outputLabel for="subject_Area" value="Subject Area: " />
 					<h:panelGrid columns="1" cellpadding="5">
 						<p:inputTextarea id="subject_Area"
-							value="#{indexBean.selected_Subject_Area.name}" rows="1"
-							cols="30" counter="counter" maxlength="20"
+							value="#{indexBean.new_Subject_Area.name}" rows="1" cols="30"
+							counter="counter" maxlength="20"
 							counterTemplate="{0} characters remaining." autoResize="false"
-							required="false">
+							required="true">
 							<f:validateLength minimum="2" />
 						</p:inputTextarea>
 						<h:outputText id="counter" />
 					</h:panelGrid>
 					<!-- 					<p:message for="subject_Area" autoUpdate="true" /> -->
 				</h:panelGrid>
-				<p:commandButton value="Create" update=":new:newArea,:form"
+				<p:commandButton value="Create"
+					update=":new:newArea,:form:subject_Areas"
 					actionListener="#{indexBean.newArea}"
 					styleClass="ui-priority-primary" oncomplete="newAreaDialog.hide()" />
 
