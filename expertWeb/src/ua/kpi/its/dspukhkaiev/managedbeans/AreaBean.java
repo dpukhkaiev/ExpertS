@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ValueChangeEvent;
 
 import ua.kpi.its.dspukhkaiev.dao.AnswerDao;
 import ua.kpi.its.dspukhkaiev.dao.ProblemDao;
@@ -18,7 +19,7 @@ import ua.kpi.its.dspukhkaiev.model.Subject_Area;
 
 @ManagedBean(name = "areaBean")
 @ViewScoped
-public class AreaBean{
+public class AreaBean {
 
     @EJB
     private ProblemDao problemDao;
@@ -33,6 +34,7 @@ public class AreaBean{
     private Rule rule;
     private Subject_Area subject_Area;
     private Problem selectedProblem;
+    private Answer selectedAnswer;
 
     @ManagedProperty(value = "#{navigationController}")
     private NavigationController navigationController;
@@ -56,6 +58,7 @@ public class AreaBean{
         problem.setSubject_Area(subject_Area);
         answer = new Answer();
         selectedProblem = new Problem();
+        selectedAnswer = new Answer();
     }
 
     public String addProblem() {
@@ -63,10 +66,32 @@ public class AreaBean{
         return "success";
     }
 
-    public String addAnswer() {
+    public void addAnswer() {
         answer.setProblem(selectedProblem);
         answerDao.create(answer);
-        return "success";
+        answer = new Answer();
+    }
+
+    public void valueChanged(ValueChangeEvent event) {
+        if (null != event.getNewValue()) {
+            selectedProblem = (Problem) event.getNewValue();
+            selectedProblem.setAnswers(answerDao
+                    .findAllByProblem(selectedProblem.getId()));
+        }
+    }
+
+    public void ruleQValueChanged(ValueChangeEvent event) {
+        if (null != event.getNewValue()) {
+            selectedProblem = (Problem) event.getNewValue();
+            selectedProblem.setAnswers(answerDao
+                    .findAllByProblem(selectedProblem.getId()));
+        }
+    }
+
+    public void ruleAValueChanged(ValueChangeEvent event) {
+        if (null != event.getNewValue()) {
+            selectedAnswer = (Answer) event.getNewValue();
+        }
     }
 
     public IndexBean getIndexBean() {
@@ -172,6 +197,14 @@ public class AreaBean{
 
     public void setSelectedProblem(Problem selectedProblem) {
         this.selectedProblem = selectedProblem;
+    }
+
+    public Answer getSelectedAnswer() {
+        return selectedAnswer;
+    }
+
+    public void setSelectedAnswer(Answer selectedAnswer) {
+        this.selectedAnswer = selectedAnswer;
     }
 
 }

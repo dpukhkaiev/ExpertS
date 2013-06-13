@@ -8,11 +8,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
 import ua.kpi.its.dspukhkaiev.managedbeans.AreaBean;
-import ua.kpi.its.dspukhkaiev.model.Problem;
+import ua.kpi.its.dspukhkaiev.model.Answer;
 
-@ManagedBean(name = "questionConverterBean")
+@ManagedBean(name = "answerConverterBean")
 @RequestScoped
-public class QuestionConverter implements Converter {
+public class AnswerConverter implements Converter {
 
     @ManagedProperty(value = "#{areaBean}")
     private AreaBean areaBean;
@@ -20,11 +20,11 @@ public class QuestionConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component,
             String value) {
-        Problem problem = new Problem();
-        problem.setQuestion(value);
-        for (Problem p : areaBean.getSubject_Area().getProblems()) {
-            if (p.getQuestion().equalsIgnoreCase(problem.getQuestion())) {
-                return p;
+        Answer answer = new Answer();
+        answer.setName(value);
+        for (Answer a : areaBean.getSelectedProblem().getAnswers()) {
+            if (a.getName().equalsIgnoreCase(answer.getName())) {
+                return a;
             }
         }
         return null;
@@ -33,8 +33,8 @@ public class QuestionConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component,
             Object value) {
-        if (value instanceof Problem) {
-            return ((Problem) value).getQuestion();
+        if (value instanceof Answer) {
+            return ((Answer) value).getName();
         }
         return null;
     }
