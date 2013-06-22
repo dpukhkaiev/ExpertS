@@ -7,26 +7,27 @@ import java.util.Set;
 import javax.persistence.*;
 
 /**
- * Entity implementation class for Entity: Cause
+ * Entity implementation class for Entity: Answer
  * 
  */
 @Entity
 @Table(name = "Cause")
+@NamedQueries({ @NamedQuery(name = "Cause.findAll", query = "SELECT c FROM Cause c") })
 public class Cause implements Serializable {
-
     @Id
     @Column(name = "idCause", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "probability", nullable = false)
-    private double probability;
-
-    @Column(name = "name", nullable = false)
-    private double name;
+    @Column(name = "cause", nullable = false)
+    private String cause;
 
     @OneToMany(mappedBy = "cause", cascade = CascadeType.ALL)
-    Set<Rule> rules = new HashSet<Rule>();
+    private Set<ProblemAnswerPair> problemAnswerPairs = new HashSet<ProblemAnswerPair>();
+
+    @ManyToOne
+    @JoinColumn(name = "Rule_idRule", referencedColumnName = "idRule")
+    private Rule rule;
 
     private static final long serialVersionUID = 1L;
 
@@ -42,28 +43,29 @@ public class Cause implements Serializable {
         this.id = id;
     }
 
-    public double getProbability() {
-        return probability;
+    public Set<ProblemAnswerPair> getProblemAnswerPairs() {
+        return problemAnswerPairs;
     }
 
-    public void setProbability(double probability) {
-        this.probability = probability;
+    public void setProblemAnswerPairs(Set<ProblemAnswerPair> problemAnswerPairs) {
+        this.problemAnswerPairs = problemAnswerPairs;
     }
 
-    public double getName() {
-        return name;
+    public String getCause() {
+        return cause;
     }
 
-    public void setName(double name) {
-        this.name = name;
+    public void setCause(String cause) {
+        this.cause = cause;
     }
 
-    public Set<Rule> getRules() {
-        return rules;
+    public Rule getRule() {
+        return rule;
     }
 
-    public void setRules(Set<Rule> rules) {
-        this.rules = rules;
+    public void setRule(Rule rule) {
+        this.rule = rule;
     }
+
 
 }

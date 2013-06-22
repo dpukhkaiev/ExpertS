@@ -25,53 +25,14 @@
 			</p:outputPanel>
 		</p:dialog>
 	</h:form>
-
+	<!--  update=":newRule:newRule" -->
 	<h:form id="newRule">
 		<p:panel header="New Rule" style="text-align:center; width:30%">
 			<h:panelGrid columns="1" style="text-align:center;width:100%">
-				<p:commandButton update=":newRule:newRule"
-					oncomplete="newRuleDialog.show()" title="Add new Rule"
-					value="Add new Rule" />
+				<p:commandButton action="#{navigationController.moveToRule}"
+					title="Add new Rule" value="Add new Rule" />
 			</h:panelGrid>
 		</p:panel>
-		<p:dialog header="New Rule" widgetVar="newRuleDialog" modal="true">
-			<p:outputPanel id="newRule" style="text-align:center;" layout="block">
-				<h:panelGrid columns="4" cellpadding="5">
-					<h:outputLabel for="selectQuestionRule" value="Question: " />
-					<p:selectOneMenu id="selectQuestionRule"
-						value="#{areaBean.selectedProblem}"
-						converter="#{questionConverterBean}">
-						<f:selectItem itemLabel="Select One" itemValue="" />
-						<p:ajax update="test" listener="#{areaBean.valueChanged}" />
-						<f:selectItems value="#{areaBean.subject_Area.problems}"
-							var="problem" itemValue="#{problem}"
-							itemLabel="#{problem.question}" />
-					</p:selectOneMenu>
-					<h:outputLabel for="selectAnswerRule" value="Answer: " />
-					<p:selectOneMenu id="selectAnswerRule"
-						value="#{areaBean.selectedAnswer}"
-						converter="#{answerConverterBean}">
-						<f:selectItem itemLabel="Select One" itemValue="" />
-						<p:ajax update="test" listener="#{areaBean.ruleAValueChanged}" />
-						<f:selectItems value="#{areaBean.selectedProblem.answers}"
-							var="answer" itemValue="#{answer}" itemLabel="#{answer.name}" />
-					</p:selectOneMenu>
-					<p:commandButton update=":newRule:newRule"
-						actionListener="#{areaBean.addRule}"
-						title="Add new Rule and Cause" value="Submit"
-						oncomplete="newAnswerDialog.hide()" />
-					<p:commandButton value="Submit" update="test"
-						oncomplete="dlg.show()" />
-				</h:panelGrid>
-			</p:outputPanel>
-		</p:dialog>
-		<p:dialog header="Selected Values" modal="true" showEffect="fade"
-			hideEffect="fade" widgetVar="dlg">
-			<h:panelGrid columns="1" id="test">
-				<h:outputText value="Value 1: #{areaBean.selectedProblem.question}" />
-				<h:outputText value="Value 2: #{areaBean.selectedAnswer.name}" />
-			</h:panelGrid>
-		</p:dialog>
 	</h:form>
 
 	<h:form id="newQuestion">
@@ -119,7 +80,7 @@
 						value="#{areaBean.selectedProblem}"
 						converter="#{questionConverterBean}">
 						<f:selectItem itemLabel="Select One" itemValue="" />
-						<p:ajax update="display" listener="#{areaBean.valueChanged}" />
+						<p:ajax update="display" listener="#{areaBean.changeQSignature}" />
 						<f:selectItems value="#{areaBean.subject_Area.problems}"
 							var="problem" itemValue="#{problem}"
 							itemLabel="#{problem.question}" />
@@ -145,5 +106,15 @@
 		</p:dialog>
 
 	</h:form>
+	
+	<h:form id="cause">
+		<p:panel header="Cause" style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandButton action="#{navigationController.moveToCause}"
+					title="Cause" value="Cause" />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+	
 </h:body>
 </html>

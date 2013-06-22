@@ -36,13 +36,23 @@ public class ProblemDao implements GenericDao<Problem, Integer> {
         em.merge(transientObject);
     }
 
-    public Set<Problem> findAllBySubjectArea(int id) {
+    public HashSet<Problem> findAllBySubjectArea(int id) {
         TypedQuery<Problem> typedQuery = em.createNamedQuery(
                 "Problem.findAllBySubjectArea", Problem.class);
         typedQuery.setParameter("id", id);
         List<Problem> results = typedQuery.getResultList();
-        Set<Problem> problems = new HashSet<Problem>(results);
+        HashSet<Problem> problems = new HashSet<Problem>(results);
         return problems;
+    }
+
+    public Problem findByQuestion(String question) {
+        if (!question.equals("")&&!question.equalsIgnoreCase("Select One")) {
+            TypedQuery<Problem> typedQuery = em.createNamedQuery(
+                    "Problem.findByQuestion", Problem.class);
+            typedQuery.setParameter("question", question);
+            return typedQuery.getSingleResult();
+        }
+        return null;
     }
 
 }

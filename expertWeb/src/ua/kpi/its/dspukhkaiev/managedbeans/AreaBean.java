@@ -1,18 +1,27 @@
 package ua.kpi.its.dspukhkaiev.managedbeans;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ValueChangeEvent;
+
+import javax.faces.event.AjaxBehaviorEvent;
 
 import ua.kpi.its.dspukhkaiev.dao.AnswerDao;
+import ua.kpi.its.dspukhkaiev.dao.CauseDao;
+import ua.kpi.its.dspukhkaiev.dao.ProblemAnswerPairDao;
 import ua.kpi.its.dspukhkaiev.dao.ProblemDao;
 import ua.kpi.its.dspukhkaiev.dao.RuleDao;
 import ua.kpi.its.dspukhkaiev.dao.SubjectAreaDao;
 import ua.kpi.its.dspukhkaiev.model.Answer;
+import ua.kpi.its.dspukhkaiev.model.Cause;
+import ua.kpi.its.dspukhkaiev.model.ProblemAnswerPair;
 import ua.kpi.its.dspukhkaiev.model.Problem;
 import ua.kpi.its.dspukhkaiev.model.Rule;
 import ua.kpi.its.dspukhkaiev.model.Subject_Area;
@@ -29,12 +38,20 @@ public class AreaBean {
     private RuleDao ruleDao;
     @EJB
     private SubjectAreaDao subjectAreaDao;
+    @EJB
+    private ProblemAnswerPairDao problemAnswerPairDao;
+    @EJB
+    private CauseDao causeDao;
     private Problem problem;
     private Answer answer;
     private Rule rule;
     private Subject_Area subject_Area;
     private Problem selectedProblem;
     private Answer selectedAnswer;
+    private List<Rule> rules;
+    private ProblemAnswerPair selectedProblemAnswerPair;
+    private ProblemAnswerPair problemAnswerPair;
+    private Cause cause;
 
     @ManagedProperty(value = "#{navigationController}")
     private NavigationController navigationController;
@@ -54,11 +71,34 @@ public class AreaBean {
         subject_Area = indexBean.getSelected_Subject_Area();
         subject_Area.setProblems(problemDao.findAllBySubjectArea(subject_Area
                 .getId()));
-        problem = new Problem();
-        problem.setSubject_Area(subject_Area);
-        answer = new Answer();
-        selectedProblem = new Problem();
-        selectedAnswer = new Answer();
+        if (problem == null) {
+            problem = new Problem();
+            problem.setSubject_Area(subject_Area);
+        }
+        if (answer == null) {
+            answer = new Answer();
+        }
+        if (selectedProblem == null) {
+            selectedProblem = new Problem();
+        }
+        if (selectedAnswer == null) {
+            selectedAnswer = new Answer();
+        }
+        if (rule == null) {
+            rule = new Rule();
+        }
+        if (rules == null) {
+            rules = ruleDao.findAll();
+        }
+        if (selectedProblemAnswerPair == null) {
+            selectedProblemAnswerPair = new ProblemAnswerPair();
+        }
+        if (problemAnswerPair == null) {
+            problemAnswerPair = new ProblemAnswerPair();
+        }
+        if (cause == null) {
+            cause = new Cause();
+        }
     }
 
     public String addProblem() {
@@ -69,28 +109,36 @@ public class AreaBean {
     public void addAnswer() {
         answer.setProblem(selectedProblem);
         answerDao.create(answer);
+        problemAnswerPair.setAnswer(answerDao.findLast());
+        problemAnswerPairDao.create(problemAnswerPair);
         answer = new Answer();
     }
 
-    public void valueChanged(ValueChangeEvent event) {
-        if (null != event.getNewValue()) {
-            selectedProblem = (Problem) event.getNewValue();
-            selectedProblem.setAnswers(answerDao
-                    .findAllByProblem(selectedProblem.getId()));
+    public void addRule() {
+        Set<ProblemAnswerPair> causes = new HashSet<ProblemAnswerPair>();
+        causes.add(selectedProblemAnswerPair);
+        // rule.setP;
+        // rule.setProbability(1.0 / causes.size());
+        // ruleDao.create(rule);
+    }
+
+    public void changeQSignature(AjaxBehaviorEvent e) {
+        if ((selectedProblem != null)
+                && !selectedProblem.getQuestion().equals("")
+                && !selectedProblem.getQuestion()
+                        .equalsIgnoreCase("Select One")) {
+            int id = selectedProblem.getId();
+            if (id != 0) {
+                HashSet<Answer> tempset = answerDao.findAllByProblem(id);
+                HashSet<Answer> answers = tempset;
+                selectedProblem.setAnswers(answers);
+            }
         }
     }
 
-    public void ruleQValueChanged(ValueChangeEvent event) {
-        if (null != event.getNewValue()) {
-            selectedProblem = (Problem) event.getNewValue();
-            selectedProblem.setAnswers(answerDao
-                    .findAllByProblem(selectedProblem.getId()));
-        }
-    }
-
-    public void ruleAValueChanged(ValueChangeEvent event) {
-        if (null != event.getNewValue()) {
-            selectedAnswer = (Answer) event.getNewValue();
+    public void changeASignature(AjaxBehaviorEvent e) {
+        if (selectedAnswer != null) {
+            answer = selectedAnswer;
         }
     }
 
@@ -205,6 +253,56 @@ public class AreaBean {
 
     public void setSelectedAnswer(Answer selectedAnswer) {
         this.selectedAnswer = selectedAnswer;
+    }
+
+    public List<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<Rule> rules) {
+        this.rules = rules;
+    }
+
+    public ProblemAnswerPairDao getProblemAnswerPairDao() {
+        return problemAnswerPairDao;
+    }
+
+    public void setProblemAnswerPairDao(
+            ProblemAnswerPairDao problemAnswerPairDao) {
+        this.problemAnswerPairDao = problemAnswerPairDao;
+    }
+
+    public ProblemAnswerPair getSelectedProblemAnswerPair() {
+        return selectedProblemAnswerPair;
+    }
+
+    public void setSelectedProblemAnswerPair(
+            ProblemAnswerPair selectedProblemAnswerPair) {
+        this.selectedProblemAnswerPair = selectedProblemAnswerPair;
+    }
+
+    public ProblemAnswerPair getProblemAnswerPair() {
+        return problemAnswerPair;
+    }
+
+    public void setProblemAnswerPair(ProblemAnswerPair problemAnswerPair) {
+        this.problemAnswerPair = problemAnswerPair;
+    }
+
+    public CauseDao getCauseDao() {
+        return causeDao;
+    }
+
+    public void setCauseDao(CauseDao causeDao) {
+        this.causeDao = causeDao;
+    }
+
+    public Cause getCause() {
+        return cause;
+    }
+
+    public void setCause(Cause cause) {
+        this.cause = cause;
     }
 
 }

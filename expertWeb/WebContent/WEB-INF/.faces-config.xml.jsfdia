@@ -13,4 +13,21 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#{navigationController.page}"
   PATH="/{navigationController.page}" SHAPE="240,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#area.xhtml" PATH="/area.xhtml"
+  SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#area.xhtml:0" NAME="item" PATH="/area.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{navigationController.moveToRule}:#{navigationController.page}"
+    NAME="output" PATH="#{navigationController.page}"
+    TARGET="rules:#{navigationController.page}"
+    TITLE="#{navigationController.moveToRule}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+  <PROCESS-ITEM ID="rules:#area.xhtml:1" NAME="item1" PATH="/area.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{navigationController.moveToCause}:#{navigationController.page}"
+    NAME="output" PATH="#{navigationController.page}"
+    TARGET="rules:#{navigationController.page}"
+    TITLE="#{navigationController.moveToCause}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

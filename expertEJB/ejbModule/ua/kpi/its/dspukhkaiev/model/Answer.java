@@ -12,7 +12,9 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Answer")
-@NamedQueries({ @NamedQuery(name = "Answer.findAllByProblem", query = "SELECT a FROM Answer a WHERE a.problem.id = :id") })
+@NamedQueries({
+        @NamedQuery(name = "Answer.findAllByProblem", query = "SELECT a FROM Answer a WHERE a.problem.id = :id"),
+        @NamedQuery(name = "Answer.findLast", query = "SELECT a FROM Answer a ORDER BY a.id DESC") })
 public class Answer implements Serializable {
     @Id
     @Column(name = "idAnswer", nullable = false)
@@ -26,8 +28,8 @@ public class Answer implements Serializable {
     @JoinColumn(name = "Problem_idProblem", referencedColumnName = "idProblem")
     private Problem problem;
 
-    @ManyToMany(mappedBy = "answers", cascade = CascadeType.ALL)
-    private Set<Rule> rules = new HashSet<Rule>();
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
+    private Set<ProblemAnswerPair> problemAnswerPairs = new HashSet<ProblemAnswerPair>();
 
     private static final long serialVersionUID = 1L;
 
@@ -51,20 +53,20 @@ public class Answer implements Serializable {
         this.name = name;
     }
 
-    public Set<Rule> getRules() {
-        return rules;
-    }
-
-    public void setRules(Set<Rule> rules) {
-        this.rules = rules;
-    }
-
     public Problem getProblem() {
         return problem;
     }
 
     public void setProblem(Problem problem) {
         this.problem = problem;
+    }
+
+    public Set<ProblemAnswerPair> getProblemAnswerPairs() {
+        return problemAnswerPairs;
+    }
+
+    public void setProblemAnswerPairs(Set<ProblemAnswerPair> problemAnswerPairs) {
+        this.problemAnswerPairs = problemAnswerPairs;
     }
 
 }

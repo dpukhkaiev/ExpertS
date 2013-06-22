@@ -15,4 +15,24 @@
 	<redirect></redirect>
 	</navigation-case>
 </navigation-rule>
+<navigation-rule>
+	<from-view-id>/area.xhtml
+	</from-view-id>
+	<navigation-case>
+	<from-action>#{navigationController.moveToRule}</from-action>
+	<from-outcome>success</from-outcome>
+	<to-view-id>#{navigationController.page}</to-view-id>
+	<redirect></redirect>
+	</navigation-case>
+</navigation-rule>
+<navigation-rule>
+	<from-view-id>/area.xhtml
+	</from-view-id>
+	<navigation-case>
+	<from-action>#{navigationController.moveToCause}</from-action>
+	<from-outcome>success</from-outcome>
+	<to-view-id>#{navigationController.page}</to-view-id>
+	<redirect></redirect>
+	</navigation-case>
+</navigation-rule>
 </faces-config>

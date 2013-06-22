@@ -5,10 +5,11 @@
 	<persistence-unit name="expertEJB">
 		<jta-data-source>java:jboss/datasources/ExpertDS</jta-data-source>
 		<class>ua.kpi.its.dspukhkaiev.model.Answer</class>
-		<class>ua.kpi.its.dspukhkaiev.model.Cause</class>
+		<class>ua.kpi.its.dspukhkaiev.model.ProblemAnswerPair</class>
 		<class>ua.kpi.its.dspukhkaiev.model.Problem</class>
 		<class>ua.kpi.its.dspukhkaiev.model.Rule</class>
 		<class>ua.kpi.its.dspukhkaiev.model.Subject_Area</class>
+		<class>ua.kpi.its.dspukhkaiev.model.Cause</class>
 		<properties>
 			<!-- Properties for Hibernate -->
 			<property name="hibernate.hbm2ddl.auto" value="update" />

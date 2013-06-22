@@ -12,6 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Rule")
+@NamedQueries({ @NamedQuery(name = "Rule.findAll", query = "SELECT r FROM Rule r") })
 public class Rule implements Serializable {
 
     @Id
@@ -19,18 +20,13 @@ public class Rule implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "Cause_idCause", referencedColumnName = "idCause")
-    private Cause cause;
+    @OneToMany(mappedBy = "rule", cascade = CascadeType.ALL)
+    private Set<Cause> causes = new HashSet<Cause>();
 
-    @ManyToMany
-    private Set<Answer> answers = new HashSet<Answer>();
+    @Column(name = "probability", nullable = false)
+    private double probability;
 
     private static final long serialVersionUID = 1L;
-
-    public Rule() {
-        super();
-    }
 
     public int getId() {
         return id;
@@ -40,22 +36,21 @@ public class Rule implements Serializable {
         this.id = id;
     }
 
-    public Cause getCause() {
-        return cause;
+    public double getProbability() {
+        return probability;
     }
 
-    public void setCause(Cause cause) {
-        this.cause = cause;
+    public void setProbability(double probability) {
+        this.probability = probability;
     }
 
-    public Set<Answer> getAnswers() {
-        return answers;
+    public Set<Cause> getCauses() {
+        return causes;
     }
 
-    public void setAnswers(Set<Answer> answers) {
-        this.answers = answers;
+    public void setCauses(Set<Cause> causes) {
+        this.causes = causes;
     }
-    
-    
+
 
 }

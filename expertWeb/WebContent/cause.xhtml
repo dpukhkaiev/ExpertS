@@ -1,0 +1,92 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<h:outputStylesheet name="resources/css/screen.css" />
+	<title>#{areaBean.subject_Area.name}</title>
+</h:head>
+<h:body>
+	<h1 style="text-align: center;">#{areaBean.subject_Area.name}</h1>
+	<h:form id="form">
+		<p:dataGrid id="causes" var="cause" value="#{causeBean.causes}"
+			columns="3" rows="12" paginator="true"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="9,12,15">
+
+			<p:panel header="#{cause.id}" style="text-align:center">
+				<h:panelGrid columns="1"
+					style="width:100%;text-align:center;font-weight:bold">
+					<p:commandLink title="#{cause.cause}" style="text-align:center"
+						update=":form:editCauseD" oncomplete="editCauseDialog.show()"
+						action="#{causeBean.viewCause(cause)}">
+						<h:outputText value="#{cause.cause}" />
+						<f:setPropertyActionListener value="#{cause}"
+							target="#{causeBean.selectedCause}" />
+						<!-- 						<f:param id="id" name="id" value="#{subject_Area.id}" /> -->
+					</p:commandLink>
+				</h:panelGrid>
+			</p:panel>
+
+		</p:dataGrid>
+		<p:dialog id="editCauseD"
+			header="Edit Cause #{causeBean.selectedCause.id}"
+			widgetVar="editCauseDialog" modal="true">
+			<p:outputPanel id="editCause" style="text-align:center;"
+				layout="block">
+
+				<p:selectManyCheckbox
+					value="#{causeBean.selectedProblemAnswerPairs}"
+					converter="#{problemAnswerPairConverterBean}"
+					layout="pageDirection">
+
+					<f:selectItems value="#{causeBean.problemAnswerPairs}" var="pair"
+						itemLabel="#{pair.answer.problem.question} - #{pair.answer.name}"
+						itemValue="#{pair}" />
+				</p:selectManyCheckbox>
+
+				<p:commandButton value="Update" update=":form:causes"
+					actionListener="#{causeBean.editCause}"
+					styleClass="ui-priority-primary" oncomplete="newCauseDialog.hide()" />
+
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+
+	<h:form id="new">
+		<p:panel header="Create new Cause"
+			style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandLink update=":new:newCause"
+					oncomplete="newCauseDialog.show()" title="New Area Detail">
+					<p:graphicImage value="resources/img/add.jpg" height="100"
+						width="100" />
+				</p:commandLink>
+			</h:panelGrid>
+		</p:panel>
+		<p:dialog header="New Cause" widgetVar="newCauseDialog" modal="true">
+			<p:outputPanel id="newCause" style="text-align:center;"
+				layout="block">
+
+				<p:selectManyCheckbox
+					value="#{causeBean.selectedProblemAnswerPairs}"
+					converter="#{problemAnswerPairConverterBean}"
+					layout="pageDirection">
+					<f:selectItems value="#{causeBean.problemAnswerPairs}" var="pair"
+						itemLabel="#{pair.answer.problem.question} - #{pair.answer.name}"
+						itemValue="#{pair}" />
+				</p:selectManyCheckbox>
+				<h:outputLabel for="cause" value="Cause: " />
+				<p:inputText id="cause" value="#{causeBean.newCause.cause}">
+					<f:validateLength minimum="5" />
+				</p:inputText>
+
+				<p:commandButton value="Create" update=":new:newCause,:form:causes"
+					actionListener="#{causeBean.newCause}"
+					styleClass="ui-priority-primary" oncomplete="newCauseDialog.hide()" />
+
+			</p:outputPanel>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

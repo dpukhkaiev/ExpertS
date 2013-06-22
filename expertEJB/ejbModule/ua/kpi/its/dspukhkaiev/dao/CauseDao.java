@@ -8,38 +8,35 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import ua.kpi.its.dspukhkaiev.model.Rule;
-import ua.kpi.its.dspukhkaiev.model.Subject_Area;
+import ua.kpi.its.dspukhkaiev.model.Cause;
 
 @Stateless
 @LocalBean
-public class RuleDao implements GenericDao<Rule, Integer> {
-
+public class CauseDao implements GenericDao<Cause, Integer> {
     @PersistenceContext(unitName = "expertEJB")
     EntityManager em;
 
     @Override
-    public Integer create(Rule newInstance) {
+    public Integer create(Cause newInstance) {
         em.persist(newInstance);
         return newInstance.getId();
     }
 
     @Override
-    public Rule read(Integer id) {
-        Rule rule = em.find(Rule.class, id);
-        return rule;
+    public Cause read(Integer id) {
+        Cause cause = em.find(Cause.class, id);
+        return cause;
     }
 
     @Override
-    public void update(Rule transientObject) {
+    public void update(Cause transientObject) {
         em.merge(transientObject);
     }
 
-    public List<Rule> findAll() {
-        TypedQuery<Rule> query = em
-                .createNamedQuery("Rule.findAll", Rule.class);
-        List<Rule> results = query.getResultList();
+    public List<Cause> findAll() {
+        TypedQuery<Cause> query = em.createNamedQuery("Cause.findAll",
+                Cause.class);
+        List<Cause> results = query.getResultList();
         return results;
     }
-
 }

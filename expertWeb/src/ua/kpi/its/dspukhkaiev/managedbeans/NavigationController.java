@@ -15,6 +15,16 @@ public class NavigationController {
         return "success";
     }
 
+    public String moveToRule() {
+        this.page = "/rule.xhtml";
+        return "success";
+    }
+    
+    public String moveToCause(){
+        this.page = "/cause.xhtml";
+        return "success";
+    }
+
     public String getPage() {
         return page;
     }

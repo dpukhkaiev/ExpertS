@@ -37,13 +37,20 @@ public class AnswerDao implements GenericDao<Answer, Integer> {
         em.merge(transientObject);
     }
 
-    public Set<Answer> findAllByProblem(int id) {
+    public HashSet<Answer> findAllByProblem(int id) {
         TypedQuery<Answer> typedQuery = em.createNamedQuery(
                 "Answer.findAllByProblem", Answer.class);
         typedQuery.setParameter("id", id);
         List<Answer> results = typedQuery.getResultList();
-        Set<Answer> answers = new HashSet<Answer>(results);
+        HashSet<Answer> answers = new HashSet<Answer>(results);
         return answers;
+    }
+
+    public Answer findLast() {
+        TypedQuery<Answer> typedQuery = em.createNamedQuery("Answer.findLast",
+                Answer.class);
+        typedQuery.setMaxResults(1);
+        return typedQuery.getSingleResult();
     }
 
 }
