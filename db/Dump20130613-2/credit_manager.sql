@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `expert` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `expert`;
+CREATE DATABASE  IF NOT EXISTS `credit` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `credit`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: expert
+-- Host: localhost    Database: credit
 -- ------------------------------------------------------
 -- Server version	5.5.21
 
@@ -18,27 +18,28 @@ USE `expert`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `subject_area`
+-- Table structure for table `manager`
 --
 
-DROP TABLE IF EXISTS `subject_area`;
+DROP TABLE IF EXISTS `manager`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `subject_area` (
-  `idSubject_Area` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`idSubject_Area`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `manager` (
+  `idManager` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(15) NOT NULL,
+  `password` varchar(15) NOT NULL,
+  PRIMARY KEY (`idManager`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `subject_area`
+-- Dumping data for table `manager`
 --
 
-LOCK TABLES `subject_area` WRITE;
-/*!40000 ALTER TABLE `subject_area` DISABLE KEYS */;
-INSERT INTO `subject_area` VALUES (1,'BP-oriented software'),(2,'Base stations'),(3,'Tarif plans');
-/*!40000 ALTER TABLE `subject_area` ENABLE KEYS */;
+LOCK TABLES `manager` WRITE;
+/*!40000 ALTER TABLE `manager` DISABLE KEYS */;
+INSERT INTO `manager` VALUES (1,'manager1','manager1');
+/*!40000 ALTER TABLE `manager` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-13 18:24:47
+-- Dump completed on 2013-06-24 13:34:53

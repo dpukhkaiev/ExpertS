@@ -21,19 +21,12 @@
 				layout="block">
 				<p:terminal commandHandler="#{terminalController.handleCommand}"
 					height="300px"
-					welcomeMessage="Hello, user! Welcome to #{areaBean.indexBean.selected_Subject_Area.name} Expert System!" />
+					welcomeMessage="Hello, user! Welcome to #{areaBean.indexBean.selected_Subject_Area.name} Expert System! Would You like to start(y/n)?" />
 			</p:outputPanel>
 		</p:dialog>
 	</h:form>
 	<!--  update=":newRule:newRule" -->
-	<h:form id="newRule">
-		<p:panel header="New Rule" style="text-align:center; width:30%">
-			<h:panelGrid columns="1" style="text-align:center;width:100%">
-				<p:commandButton action="#{navigationController.moveToRule}"
-					title="Add new Rule" value="Add new Rule" />
-			</h:panelGrid>
-		</p:panel>
-	</h:form>
+	<!-- place for rule if needed -->
 
 	<h:form id="newQuestion">
 		<p:panel header="New Question" style="text-align:center; width:30%">
@@ -106,7 +99,7 @@
 		</p:dialog>
 
 	</h:form>
-	
+
 	<h:form id="cause">
 		<p:panel header="Cause" style="text-align:center; width:30%">
 			<h:panelGrid columns="1" style="text-align:center;width:100%">
@@ -115,6 +108,6 @@
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
-	
+
 </h:body>
 </html>

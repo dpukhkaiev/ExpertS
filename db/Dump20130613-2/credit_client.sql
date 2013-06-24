@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `expert` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `expert`;
+CREATE DATABASE  IF NOT EXISTS `credit` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `credit`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: expert
+-- Host: localhost    Database: credit
 -- ------------------------------------------------------
 -- Server version	5.5.21
 
@@ -18,27 +18,32 @@ USE `expert`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `cause`
+-- Table structure for table `client`
 --
 
-DROP TABLE IF EXISTS `cause`;
+DROP TABLE IF EXISTS `client`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `cause` (
-  `idCause` int(11) NOT NULL AUTO_INCREMENT,
-  `name` double NOT NULL,
-  `probability` double NOT NULL,
-  PRIMARY KEY (`idCause`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `client` (
+  `idClient` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `surname` varchar(45) DEFAULT NULL,
+  `secondName` varchar(45) DEFAULT NULL,
+  `income` decimal(7,2) DEFAULT NULL,
+  `mobileNumber` varchar(10) DEFAULT NULL,
+  `guarantor` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`idClient`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `cause`
+-- Dumping data for table `client`
 --
 
-LOCK TABLES `cause` WRITE;
-/*!40000 ALTER TABLE `cause` DISABLE KEYS */;
-/*!40000 ALTER TABLE `cause` ENABLE KEYS */;
+LOCK TABLES `client` WRITE;
+/*!40000 ALTER TABLE `client` DISABLE KEYS */;
+INSERT INTO `client` VALUES (1,'Иван','Иванов','Иванович',3000.00,'0671111111',1),(8,'qwe','qwe','qwe',1234.00,'0672222222',1),(9,'qwe','qwe','qwe',1241.00,'0673333333',1);
+/*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-13 18:24:48
+-- Dump completed on 2013-06-24 13:34:53

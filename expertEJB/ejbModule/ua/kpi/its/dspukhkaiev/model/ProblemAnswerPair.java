@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang3.SerializationUtils;
+
 /**
  * Entity implementation class for Entity: Cause
  * 
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ProblemAnswerPair")
 @NamedQueries({
-        @NamedQuery(name = "ProblemAnswerPair.findAll", query = "SELECT pap FROM ProblemAnswerPair pap"),
+        @NamedQuery(name = "ProblemAnswerPair.findAll", query = "SELECT pap FROM ProblemAnswerPair pap WHERE pap.cause.id = NULL"),
         @NamedQuery(name = "ProblemAnswerPair.findByCause", query = "SELECT pap FROM ProblemAnswerPair pap WHERE pap.cause.id = :causeId") })
 public class ProblemAnswerPair implements Serializable {
 
@@ -52,6 +54,36 @@ public class ProblemAnswerPair implements Serializable {
 
     public void setCause(Cause cause) {
         this.cause = cause;
+    }
+
+    public ProblemAnswerPair deepClone() {
+        ProblemAnswerPair other = new ProblemAnswerPair();
+        other.setId(this.id);
+        other.setAnswer(this.answer);
+        other.setCause(this.cause);
+        return other;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ProblemAnswerPair other = (ProblemAnswerPair) obj;
+        if (id != other.id)
+            return false;
+        return true;
     }
 
 }

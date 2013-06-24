@@ -29,6 +29,9 @@ public class Cause implements Serializable {
     @JoinColumn(name = "Rule_idRule", referencedColumnName = "idRule")
     private Rule rule;
 
+    @Column(name = "probability", nullable = false)
+    private double probability = 0;
+
     private static final long serialVersionUID = 1L;
 
     public Cause() {
@@ -67,5 +70,12 @@ public class Cause implements Serializable {
         this.rule = rule;
     }
 
+    public double getProbability() {
+        return probability;
+    }
+
+    public void setProbability(double probability) {
+        this.probability = probability;
+    }
 
 }

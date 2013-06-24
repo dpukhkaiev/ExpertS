@@ -35,7 +35,9 @@ public class CauseBean {
     private Cause selectedCause;
     private Cause newCause;
     private ProblemAnswerPair selectedProblemAnswerPair;
+    private List<ProblemAnswerPair> oldSelectedProblemAnswerPairs;
     private List<ProblemAnswerPair> selectedProblemAnswerPairs;
+    private List<ProblemAnswerPair> newProblemAnswerPairs;
     private List<ProblemAnswerPair> problemAnswerPairs;
 
     private List<Subject_Area> subject_Areas;
@@ -48,7 +50,12 @@ public class CauseBean {
         selectedCause = new Cause();
         newCause = new Cause();
         problemAnswerPairs = problemAnswerPairDao.findAll();
+        /*
+         * for (ProblemAnswerPair pap : newProblemAnswerPairs)
+         * problemAnswerPairs.add(pap.deepClone()); // Don't forget about copy
+         */
         selectedProblemAnswerPairs = new ArrayList<ProblemAnswerPair>();
+        oldSelectedProblemAnswerPairs = new ArrayList<ProblemAnswerPair>();
         selectedProblemAnswerPair = new ProblemAnswerPair();
 
         // subject_Areas = subjectAreaDao.findAll();
@@ -70,12 +77,14 @@ public class CauseBean {
             pap.setCause(newCause);
             if (problemAnswerPairDao.read(pap.getId()).getCause() == null) {
                 problemAnswerPairDao.update(pap);
-            } else {
-                ProblemAnswerPair tempPair = pap;
+
+                ProblemAnswerPair tempPair = pap;   //copy
                 tempPair.setId(0);
+                tempPair.setCause(null);
                 problemAnswerPairDao.create(tempPair);
             }
         }
+        newProblemAnswerPairs = problemAnswerPairDao.findAll();
         return "success";
     }
 
@@ -83,24 +92,44 @@ public class CauseBean {
         selectedCause = cause;
         List<ProblemAnswerPair> problemAnswerPairs = problemAnswerPairDao
                 .findByCause(selectedCause.getId());
-        for (ProblemAnswerPair pap : problemAnswerPairs) {
-            selectedProblemAnswerPairs.add(pap);
-            if (this.problemAnswerPairs.contains(pap)) {
 
-                // this.problemAnswerPairs.remove(pap);
+        for (ProblemAnswerPair pap : this.problemAnswerPairs) {
+            for (ProblemAnswerPair pap2 : problemAnswerPairs) {
+                if (pap.getAnswer().getName()
+                        .equals(pap2.getAnswer().getName())
+                        && pap.getAnswer()
+                                .getProblem()
+                                .getQuestion()
+                                .equals(pap2.getAnswer().getProblem()
+                                        .getQuestion())) {
+                    pap.setCause(cause);
+                    selectedProblemAnswerPairs.add(pap);
+                }
             }
+
         }
+        for (ProblemAnswerPair pap : selectedProblemAnswerPairs)
+            oldSelectedProblemAnswerPairs.add(pap.deepClone());
     }
 
+    //creates more empty rows than needed
     public void editCause() {
         for (ProblemAnswerPair pap : selectedProblemAnswerPairs) {
-            pap.setCause(selectedCause);
             if (problemAnswerPairDao.read(pap.getId()).getCause() == null) {
+                pap.setCause(selectedCause);
+
                 problemAnswerPairDao.update(pap);
-            } else {
+
                 ProblemAnswerPair tempPair = pap;
                 tempPair.setId(0);
+                tempPair.setCause(null);
                 problemAnswerPairDao.create(tempPair);
+            }
+        }
+        for (ProblemAnswerPair pap : oldSelectedProblemAnswerPairs) {
+            if (!selectedProblemAnswerPairs.contains(pap)) {
+                pap.setCause(null);
+                problemAnswerPairDao.update(pap);
             }
         }
     }
@@ -212,12 +241,30 @@ public class CauseBean {
         this.selectedProblemAnswerPairs = selectedProblemAnswerPairs;
     }
 
+    public List<ProblemAnswerPair> getNewProblemAnswerPairs() {
+        return newProblemAnswerPairs;
+    }
+
+    public void setNewProblemAnswerPairs(
+            List<ProblemAnswerPair> newProblemAnswerPairs) {
+        this.newProblemAnswerPairs = newProblemAnswerPairs;
+    }
+
     public List<ProblemAnswerPair> getProblemAnswerPairs() {
         return problemAnswerPairs;
     }
 
     public void setProblemAnswerPairs(List<ProblemAnswerPair> problemAnswerPairs) {
         this.problemAnswerPairs = problemAnswerPairs;
+    }
+
+    public List<ProblemAnswerPair> getOldSelectedProblemAnswerPairs() {
+        return oldSelectedProblemAnswerPairs;
+    }
+
+    public void setOldSelectedProblemAnswerPairs(
+            List<ProblemAnswerPair> oldSelectedProblemAnswerPairs) {
+        this.oldSelectedProblemAnswerPairs = oldSelectedProblemAnswerPairs;
     }
 
 }

@@ -1,0 +1,90 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputStylesheet name="resources/css/screen.css" />
+	<title>#{areaBean.subject_Area.name}</title>
+</h:head>
+<h:body>
+	<h1 style="text-align: center;">#{areaBean.subject_Area.name}</h1>
+
+	<h:form id="rules">
+		<p:dataGrid id="rulesTable" var="rule" value="#{areaBean.rules}"
+			columns="3" rows="12" paginator="true"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="9,12,15">
+			<p:panel header="New Rule" style="text-align:center; width:30%">
+				<h:panelGrid columns="4" style="text-align:center;width:100%">
+					<h:outputLabel for="ruleId" value="Rule's ID: " />
+					<h:outputText id="ruleId" value="#{rule.id}" />
+					<p:dataGrid id="rulesQATable" var="answer" value="#{rule.answers}">
+						<h:panelGrid columns="2" style="text-align:center;width:100%">
+
+						</h:panelGrid>
+					</p:dataGrid>
+					<p:commandButton update=":rules" oncomplete=""
+						title="Modify rule" value="+" />
+				</h:panelGrid>
+			</p:panel>
+		</p:dataGrid>
+	</h:form>
+
+	<h:form id="newRule">
+		<p:panel header="New Rule" style="text-align:center; width:30%">
+			<h:panelGrid columns="1" style="text-align:center;width:100%">
+				<p:commandButton update=":newRule:newRule"
+					oncomplete="newRuleDialog.show()" title="Add new Rule"
+					value="Add new Rule" />
+			</h:panelGrid>
+		</p:panel>
+		<p:dialog header="Select Question" widgetVar="newRuleDialog" modal="true">
+			<p:outputPanel id="newRule" style="text-align:center;" layout="block">
+				<h:panelGrid columns="4" cellpadding="5">
+					<h:outputLabel for="selectQuestion" value="Question: " />
+					<p:selectOneMenu id="selectQuestion"
+						value="#{areaBean.selectedProblem}"
+						converter="#{questionConverterBean}">
+						<f:selectItem itemLabel="Select One" itemValue="" />
+						<p:ajax update="display" listener="#{areaBean.changeQSignature}" />
+						<f:selectItems value="#{areaBean.subject_Area.problems}"
+							var="problem" itemValue="#{problem}"
+							itemLabel="#{problem.question}" />
+					</p:selectOneMenu>
+					<p:commandButton value="Submit" update="newAnswer"
+						oncomplete="newAnswerDialog.show()" />
+
+				</h:panelGrid>
+			</p:outputPanel>
+		</p:dialog>
+		<p:dialog header="Select Answer" modal="true" showEffect="fade"
+			hideEffect="fade" widgetVar="newAnswerDialog" id="newAnswer">
+			<h:outputText
+				value="I scoff at you, stupid human!: #{areaBean.selectedProblem.question}" />
+			<h:outputLabel for="selectAnswerRule" value="Answer: " />
+			<p:selectOneMenu widgetVar="answersWidgetVar" id="selectAnswerRule"
+				value="#{areaBean.selectedAnswer}"
+				converter="#{answerConverterBean}">
+				<f:selectItem itemLabel="Select One" itemValue="" />
+				<p:ajax update="display" listener="#{areaBean.changeASignature}" />
+				<f:selectItems
+					value="#{areaBean.selectedProblem.answers}"
+					var="answer" itemValue="#{answer}" itemLabel="#{answer.name}" />
+			</p:selectOneMenu>
+			<p:commandButton update=":newRule:newAnswer"
+				actionListener="#{areaBean.addRule}" title="Add new Rule and Cause"
+				value="Submit" oncomplete="newAnswerDialog.hide()" />
+			<p:commandButton value="Submit" update="display"
+				oncomplete="dlg.show()" />
+		</p:dialog>
+		<p:dialog header="Selected Values" modal="true" showEffect="fade"
+			hideEffect="fade" widgetVar="dlg">
+			<h:panelGrid columns="1" id="display">
+				<h:outputText value="Value 1: #{areaBean.selectedProblem.question}" />
+				<h:outputText value="Value 2: #{areaBean.selectedAnswer.name}" />
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `expert` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `expert`;
+CREATE DATABASE  IF NOT EXISTS `credit` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `credit`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: expert
+-- Host: localhost    Database: credit
 -- ------------------------------------------------------
 -- Server version	5.5.21
 
@@ -18,29 +18,32 @@ USE `expert`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `answer`
+-- Table structure for table `creditprogram`
 --
 
-DROP TABLE IF EXISTS `answer`;
+DROP TABLE IF EXISTS `creditprogram`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `answer` (
-  `idAnswer` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `Problem_idProblem` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idAnswer`),
-  KEY `FK752F2BDEEE569151` (`Problem_idProblem`),
-  CONSTRAINT `FK752F2BDEEE569151` FOREIGN KEY (`Problem_idProblem`) REFERENCES `problem` (`idProblem`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `creditprogram` (
+  `idCreditProgram` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `sumMin` decimal(7,2) DEFAULT NULL,
+  `sumMax` decimal(7,2) DEFAULT NULL,
+  `initialFee` decimal(3,2) DEFAULT NULL,
+  `duration` int(11) DEFAULT NULL,
+  `rate` decimal(3,2) DEFAULT NULL,
+  PRIMARY KEY (`idCreditProgram`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `answer`
+-- Dumping data for table `creditprogram`
 --
 
-LOCK TABLES `answer` WRITE;
-/*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-/*!40000 ALTER TABLE `answer` ENABLE KEYS */;
+LOCK TABLES `creditprogram` WRITE;
+/*!40000 ALTER TABLE `creditprogram` DISABLE KEYS */;
+INSERT INTO `creditprogram` VALUES (1,'Standard12',10000.00,30000.00,0.08,12,0.26),(2,'Standard24',10000.00,30000.00,0.09,24,0.27),(3,'Standard36',10000.00,30000.00,0.10,36,0.28);
+/*!40000 ALTER TABLE `creditprogram` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-13 18:24:48
+-- Dump completed on 2013-06-24 13:34:53
