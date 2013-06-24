@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import ua.kpi.its.dspukhkaiev.model.Answer;
+import ua.kpi.its.dspukhkaiev.model.Cause;
 import ua.kpi.its.dspukhkaiev.model.ProblemAnswerPair;
 import ua.kpi.its.dspukhkaiev.model.Subject_Area;
 
@@ -38,18 +39,28 @@ public class ProblemAnswerPairDao implements
         em.merge(transientObject);
     }
 
-    public List<ProblemAnswerPair> findAll() {
+    public List<ProblemAnswerPair> findAll(int idSA) {
         TypedQuery<ProblemAnswerPair> query = em.createNamedQuery(
                 "ProblemAnswerPair.findAll", ProblemAnswerPair.class);
+        query.setParameter("idSubject_Area", idSA);
         List<ProblemAnswerPair> results = query.getResultList();
         return results;
     }
 
-    public List<ProblemAnswerPair> findByCause(int id) {
+    public List<ProblemAnswerPair> findByCause(int id, int idSA) {
         TypedQuery<ProblemAnswerPair> typedQuery = em.createNamedQuery(
                 "ProblemAnswerPair.findByCause", ProblemAnswerPair.class);
         typedQuery.setParameter("causeId", id);
+        typedQuery.setParameter("idSubject_Area", idSA);
         List<ProblemAnswerPair> results = typedQuery.getResultList();
+        return results;
+    }
+
+    public List<Cause> findCause(int idSA) {
+        TypedQuery<Cause> typedQuery = em.createNamedQuery(
+                "ProblemAnswerPair.findCause", Cause.class);
+        typedQuery.setParameter("idSubject_Area", idSA);
+        List<Cause> results = typedQuery.getResultList();
         return results;
     }
 

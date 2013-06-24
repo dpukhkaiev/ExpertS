@@ -13,8 +13,9 @@ import org.apache.commons.lang3.SerializationUtils;
 @Entity
 @Table(name = "ProblemAnswerPair")
 @NamedQueries({
-        @NamedQuery(name = "ProblemAnswerPair.findAll", query = "SELECT pap FROM ProblemAnswerPair pap WHERE pap.cause.id = NULL"),
-        @NamedQuery(name = "ProblemAnswerPair.findByCause", query = "SELECT pap FROM ProblemAnswerPair pap WHERE pap.cause.id = :causeId") })
+        @NamedQuery(name = "ProblemAnswerPair.findAll", query = "SELECT pap FROM ProblemAnswerPair pap WHERE pap.cause.id = NULL AND pap.answer.problem.subject_Area.id = :idSubject_Area"),
+        @NamedQuery(name = "ProblemAnswerPair.findByCause", query = "SELECT pap FROM ProblemAnswerPair pap WHERE pap.cause.id = :causeId AND pap.answer.problem.subject_Area.id = :idSubject_Area"),
+        @NamedQuery(name = "ProblemAnswerPair.findCause", query = "SELECT pap.cause FROM ProblemAnswerPair pap WHERE pap.cause.id <> NULL AND pap.answer.problem.subject_Area.id = :idSubject_Area") })
 public class ProblemAnswerPair implements Serializable {
 
     @Id

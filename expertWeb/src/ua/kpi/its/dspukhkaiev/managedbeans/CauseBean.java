@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -44,12 +45,22 @@ public class CauseBean {
     private Subject_Area selected_Subject_Area;
     private Subject_Area new_Subject_Area;
 
+    @ManagedProperty(value = "#{indexBean}")
+    private IndexBean indexBean;
+
     @PostConstruct
     public void init() {
-        causes = causeDao.findAll();
+        causes = new ArrayList<Cause>();
+        for (Cause c : causeDao.findAll()) {
+            if (problemAnswerPairDao.findCause(
+                    indexBean.getSelected_Subject_Area().getId()).contains(c))
+                causes.add(c);
+        }
+
         selectedCause = new Cause();
         newCause = new Cause();
-        problemAnswerPairs = problemAnswerPairDao.findAll();
+        problemAnswerPairs = problemAnswerPairDao.findAll(indexBean
+                .getSelected_Subject_Area().getId());
         /*
          * for (ProblemAnswerPair pap : newProblemAnswerPairs)
          * problemAnswerPairs.add(pap.deepClone()); // Don't forget about copy
@@ -78,20 +89,22 @@ public class CauseBean {
             if (problemAnswerPairDao.read(pap.getId()).getCause() == null) {
                 problemAnswerPairDao.update(pap);
 
-                ProblemAnswerPair tempPair = pap;   //copy
+                ProblemAnswerPair tempPair = pap; // copy
                 tempPair.setId(0);
                 tempPair.setCause(null);
                 problemAnswerPairDao.create(tempPair);
             }
         }
-        newProblemAnswerPairs = problemAnswerPairDao.findAll();
+        newProblemAnswerPairs = problemAnswerPairDao.findAll(indexBean
+                .getSelected_Subject_Area().getId());
         return "success";
     }
 
     public void viewCause(Cause cause) {
         selectedCause = cause;
         List<ProblemAnswerPair> problemAnswerPairs = problemAnswerPairDao
-                .findByCause(selectedCause.getId());
+                .findByCause(selectedCause.getId(), indexBean
+                        .getSelected_Subject_Area().getId());
 
         for (ProblemAnswerPair pap : this.problemAnswerPairs) {
             for (ProblemAnswerPair pap2 : problemAnswerPairs) {
@@ -112,7 +125,7 @@ public class CauseBean {
             oldSelectedProblemAnswerPairs.add(pap.deepClone());
     }
 
-    //creates more empty rows than needed
+    // creates more empty rows than needed
     public void editCause() {
         for (ProblemAnswerPair pap : selectedProblemAnswerPairs) {
             if (problemAnswerPairDao.read(pap.getId()).getCause() == null) {
@@ -265,6 +278,14 @@ public class CauseBean {
     public void setOldSelectedProblemAnswerPairs(
             List<ProblemAnswerPair> oldSelectedProblemAnswerPairs) {
         this.oldSelectedProblemAnswerPairs = oldSelectedProblemAnswerPairs;
+    }
+
+    public IndexBean getIndexBean() {
+        return indexBean;
+    }
+
+    public void setIndexBean(IndexBean indexBean) {
+        this.indexBean = indexBean;
     }
 
 }

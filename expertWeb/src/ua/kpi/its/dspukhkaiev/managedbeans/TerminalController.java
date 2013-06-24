@@ -58,7 +58,8 @@ public class TerminalController {
         rule = new Rule();
         for (Cause c : causes) {
             c.setProblemAnswerPairs(new HashSet<ProblemAnswerPair>(
-                    problemAnswerPairDao.findByCause(c.getId())));
+                    problemAnswerPairDao.findByCause(c.getId(), indexBean
+                            .getSelected_Subject_Area().getId())));
         }
 
     }
