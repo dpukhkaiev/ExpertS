@@ -1,6 +1,5 @@
 package ua.kpi.its.dspukhkaiev.dao;
 
-import java.util.HashSet;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,10 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import ua.kpi.its.dspukhkaiev.model.Answer;
 import ua.kpi.its.dspukhkaiev.model.Cause;
 import ua.kpi.its.dspukhkaiev.model.ProblemAnswerPair;
-import ua.kpi.its.dspukhkaiev.model.Subject_Area;
 
 @Stateless
 @LocalBean

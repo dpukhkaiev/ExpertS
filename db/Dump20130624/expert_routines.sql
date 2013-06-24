@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `credit` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `credit`;
+CREATE DATABASE  IF NOT EXISTS `expert` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `expert`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: credit
+-- Host: localhost    Database: expert
 -- ------------------------------------------------------
 -- Server version	5.5.21
 
@@ -18,29 +18,12 @@ USE `credit`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `manager`
+-- Dumping events for database 'expert'
 --
 
-DROP TABLE IF EXISTS `manager`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `manager` (
-  `idManager` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(15) NOT NULL,
-  `password` varchar(15) NOT NULL,
-  PRIMARY KEY (`idManager`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 --
--- Dumping data for table `manager`
+-- Dumping routines for database 'expert'
 --
-
-LOCK TABLES `manager` WRITE;
-/*!40000 ALTER TABLE `manager` DISABLE KEYS */;
-INSERT INTO `manager` VALUES (1,'manager1','manager1');
-/*!40000 ALTER TABLE `manager` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -51,4 +34,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-24 13:34:53
+-- Dump completed on 2013-06-25  0:51:48

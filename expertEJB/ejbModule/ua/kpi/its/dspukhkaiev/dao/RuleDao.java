@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import ua.kpi.its.dspukhkaiev.model.Rule;
-import ua.kpi.its.dspukhkaiev.model.Subject_Area;
 
 @Stateless
 @LocalBean

@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `credit` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `credit`;
+CREATE DATABASE  IF NOT EXISTS `expert` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `expert`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: credit
+-- Host: localhost    Database: expert
 -- ------------------------------------------------------
 -- Server version	5.5.21
 
@@ -18,29 +18,27 @@ USE `credit`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `login`
+-- Table structure for table `subject_area`
 --
 
-DROP TABLE IF EXISTS `login`;
+DROP TABLE IF EXISTS `subject_area`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `login` (
-  `Client_idClient` int(11) NOT NULL,
-  `login` varchar(15) NOT NULL,
-  `password` varchar(15) NOT NULL,
-  PRIMARY KEY (`Client_idClient`),
-  CONSTRAINT `fk_Login_Client1` FOREIGN KEY (`Client_idClient`) REFERENCES `client` (`idClient`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `subject_area` (
+  `idSubject_Area` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`idSubject_Area`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `login`
+-- Dumping data for table `subject_area`
 --
 
-LOCK TABLES `login` WRITE;
-/*!40000 ALTER TABLE `login` DISABLE KEYS */;
-INSERT INTO `login` VALUES (1,'ivaniv','ivanov'),(8,'qwe','qwe'),(9,'qwe2','qwe');
-/*!40000 ALTER TABLE `login` ENABLE KEYS */;
+LOCK TABLES `subject_area` WRITE;
+/*!40000 ALTER TABLE `subject_area` DISABLE KEYS */;
+INSERT INTO `subject_area` VALUES (1,'BP-oriented software'),(2,'BS controller'),(3,'Тарифные планы');
+/*!40000 ALTER TABLE `subject_area` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-24 13:34:54
+-- Dump completed on 2013-06-25  0:51:48

@@ -39,4 +39,11 @@ public class CauseDao implements GenericDao<Cause, Integer> {
         List<Cause> results = query.getResultList();
         return results;
     }
+
+    public List<Cause> findAllByProbability() {
+        TypedQuery<Cause> query = em.createNamedQuery(
+                "Cause.findAllByProbability", Cause.class);
+        List<Cause> results = query.getResultList();
+        return results;
+    }
 }

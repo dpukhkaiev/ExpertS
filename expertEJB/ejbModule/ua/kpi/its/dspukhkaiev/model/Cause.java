@@ -12,7 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "Cause")
-@NamedQueries({ @NamedQuery(name = "Cause.findAll", query = "SELECT c FROM Cause c") })
+@NamedQueries({ @NamedQuery(name = "Cause.findAll", query = "SELECT c FROM Cause c"),
+    @NamedQuery(name = "Cause.findAllByProbability", query="SELECT c FROM Cause c ORDER BY c.probability DESC")})
 public class Cause implements Serializable {
     @Id
     @Column(name = "idCause", nullable = false)

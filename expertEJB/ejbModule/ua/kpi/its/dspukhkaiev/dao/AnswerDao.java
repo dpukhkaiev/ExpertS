@@ -2,7 +2,6 @@ package ua.kpi.its.dspukhkaiev.dao;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -11,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import ua.kpi.its.dspukhkaiev.model.Answer;
-import ua.kpi.its.dspukhkaiev.model.Problem;
 
 @Stateless
 @LocalBean

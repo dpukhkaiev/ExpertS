@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import org.apache.commons.lang3.SerializationUtils;
-
 /**
  * Entity implementation class for Entity: Cause
  * 

@@ -7,11 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.component.selectmanycheckbox.SelectManyCheckbox;
 
 import ua.kpi.its.dspukhkaiev.dao.CauseDao;
 import ua.kpi.its.dspukhkaiev.dao.ProblemAnswerPairDao;

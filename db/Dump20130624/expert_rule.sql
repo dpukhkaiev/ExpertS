@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `credit` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `credit`;
+CREATE DATABASE  IF NOT EXISTS `expert` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `expert`;
 -- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
 --
--- Host: localhost    Database: credit
+-- Host: localhost    Database: expert
 -- ------------------------------------------------------
 -- Server version	5.5.21
 
@@ -18,35 +18,26 @@ USE `credit`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `credit`
+-- Table structure for table `rule`
 --
 
-DROP TABLE IF EXISTS `credit`;
+DROP TABLE IF EXISTS `rule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `credit` (
-  `idCredit` int(11) NOT NULL AUTO_INCREMENT,
-  `sum` decimal(7,2) DEFAULT NULL,
-  `startingDate` date DEFAULT NULL,
-  `isGranted` tinyint(1) DEFAULT '0',
-  `isRepayed` tinyint(1) DEFAULT '0',
-  `CreditProgram_idCreditProgram` int(11) NOT NULL,
-  `Client_idClient` int(11) NOT NULL,
-  PRIMARY KEY (`idCredit`),
-  KEY `fk_Credit_CreditProgram1` (`CreditProgram_idCreditProgram`),
-  KEY `fk_Credit_Client1` (`Client_idClient`),
-  CONSTRAINT `fk_Credit_Client1` FOREIGN KEY (`Client_idClient`) REFERENCES `client` (`idClient`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Credit_CreditProgram1` FOREIGN KEY (`CreditProgram_idCreditProgram`) REFERENCES `creditprogram` (`idCreditProgram`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE `rule` (
+  `idRule` int(11) NOT NULL AUTO_INCREMENT,
+  `probability` double NOT NULL,
+  PRIMARY KEY (`idRule`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `credit`
+-- Dumping data for table `rule`
 --
 
-LOCK TABLES `credit` WRITE;
-/*!40000 ALTER TABLE `credit` DISABLE KEYS */;
-/*!40000 ALTER TABLE `credit` ENABLE KEYS */;
+LOCK TABLES `rule` WRITE;
+/*!40000 ALTER TABLE `rule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rule` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-06-24 13:34:53
+-- Dump completed on 2013-06-25  0:51:48
