@@ -128,7 +128,7 @@ public class CauseBean {
     // creates more empty rows than needed
     public void editCause() {
         for (ProblemAnswerPair pap : selectedProblemAnswerPairs) {
-            if (problemAnswerPairDao.read(pap.getId()).getCause() == null) {
+            if (pap.getCause() == null) {
                 pap.setCause(selectedCause);
 
                 problemAnswerPairDao.update(pap);

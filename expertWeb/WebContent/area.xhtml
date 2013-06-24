@@ -9,6 +9,17 @@
 </h:head>
 <h:body>
 	<h1 style="text-align: center;">#{areaBean.subject_Area.name}</h1>
+	<h:form id="navigationForm">
+		<p:commandButton id="dynaButton" value="Menu" type="button" />
+		<p:menu overlay="true" trigger="dynaButton" my="left top"
+			at="left bottom">
+			<p:submenu label="Navigations">
+				<p:menuitem value="Main" url="/index.xhtml" icon="ui-icon-home" />
+				<p:menuitem value="Back" outcome="/index.xhtml"
+					icon="ui-icon-arrowrefresh-1-w" />
+			</p:submenu>
+		</p:menu>
+	</h:form>
 	<h:form id="newQuery">
 		<p:panel header="New Query" style="text-align:center; width:30%">
 			<h:panelGrid columns="1" style="text-align:center;width:100%">
